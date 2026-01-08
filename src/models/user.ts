@@ -6,9 +6,9 @@ interface UserAttributes {
     username?: string;
     mail: string;
     password: string;
-    status: number;
-    avatar_url?: string;
-    last_seen_at?: Date;
+    status: 'offline' | 'online' | 'away';
+    avatarUrl?: string;
+    lastSeenAt?: Date;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -21,9 +21,9 @@ class User extends Model<UserAttributes, UserCreationAttributes>
     public username?: string;
     public mail!: string;
     public password!: string;
-    public status!: number;
-    public avatar_url?: string;
-    public last_seen_at?: Date;
+    public status!: 'offline' | 'online' | 'away';
+    public avatarUrl?: string;
+    public lastSeenAt?: Date;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -50,14 +50,14 @@ User.init(
             allowNull: false,
         },
         status: {
-            type: DataTypes.INTEGER,
-            defaultValue: 1,
+            type: DataTypes.ENUM('offline', 'online', 'away'),
+            defaultValue: 'offline',
         },
-        avatar_url: {
+        avatarUrl: {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        last_seen_at: {
+        lastSeenAt: {
             type: DataTypes.DATE,
             allowNull: true,
         },
