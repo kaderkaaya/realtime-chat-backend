@@ -3,14 +3,14 @@ import sequelize from "../config/env.js";
 
 interface WorkspaceMemberAttributes {
     workspaceId: number;
-    userId: string;
+    userId: number;
     role: 'admin' | 'member';
     joinedAt?: Date;
 }
 
 class WorkspaceMember extends Model<WorkspaceMemberAttributes> implements WorkspaceMemberAttributes {
     public workspaceId!: number;
-    public userId!: string;
+    public userId!: number;
     public role!: 'admin' | 'member';
 }
 
@@ -22,7 +22,7 @@ WorkspaceMember.init(
             references: { model: 'workspaces', key: 'id' }
         },
         userId: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
             references: { model: 'users', key: 'id' }
         },
