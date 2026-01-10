@@ -6,7 +6,7 @@ interface ChannelAttributes {
     id: number;
     name?: string;
     workspaceId: number;
-    ownerId: string;
+    ownerId: number;
     channelType: 'public' | 'private' | 'dm';
 }
 
@@ -17,7 +17,7 @@ class Channel extends Model<ChannelAttributes, ChannelCreationAttributes> implem
     public name!: string;
     public workspaceId!: number;
     public channelType!: 'public' | 'private' | 'dm';
-    public ownerId!: string;
+    public ownerId!: number
 
 }
 
@@ -45,7 +45,7 @@ Channel.init(
             defaultValue: 'public',
         },
         ownerId: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
             references: {
                 model: 'users',

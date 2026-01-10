@@ -5,7 +5,7 @@ interface WorkspaceAttributes {
     id: number;
     name: string;
     slug: string;
-    ownerId: string;
+    ownerId: number;
 }
 
 interface WorkspaceCreationAttributes extends Optional<WorkspaceAttributes, "id"> { }
@@ -14,7 +14,7 @@ class Workspace extends Model<WorkspaceAttributes, WorkspaceCreationAttributes> 
     public id!: number;
     public name!: string;
     public slug!: string;
-    public ownerId!: string;
+    public ownerId!: number;
 
 }
 
@@ -35,7 +35,7 @@ Workspace.init(
             unique: true,
         },
         ownerId: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
             references: {
                 model: 'users',
