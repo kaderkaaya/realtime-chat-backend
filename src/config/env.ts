@@ -19,15 +19,21 @@ const sequelize = new Sequelize(
         host: DB_HOST,
         dialect: DB_DIALECT as 'mysql',
         logging: false,
+        pool: {
+            max: 10, //max concurrent connections
+            min: 2, //min concurrent connections
+            acquire: 30000, //max time to get connection from pool(bekleme süresi)
+            idle: 10000, //max time a connection can be idle before being released(boşta kalma süresi)  
+        },
     }
 );
 
 export const connectDatabase = async () => {
-try {
-    await sequelize.authenticate();
-    console.log("Database connection has been established successfully.");
-} catch (error) {
-    console.error("Unable to connect to the database:", error);
-}
+    try {
+        await sequelize.authenticate();
+        console.log("Database connection has been established successfully.");
+    } catch (error) {
+        console.error("Unable to connect to the database:", error);
+    }
 };
 export default sequelize;
