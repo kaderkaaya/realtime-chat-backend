@@ -10,10 +10,10 @@ router.post("/register",
     SchemaHelper.validateSchemaBody(UserSchema.register),
     (UserController.register));
 
-// router.post("/login",
-//     authLimiter,
-//     SchemaHelper.validateSchemaBody(UserSchema.login),
-//     (UserController.login));
+router.post("/login",
+    authLimiter,
+    SchemaHelper.validateSchemaBody(UserSchema.login),
+    (UserController.login));
 
 
 export default router;

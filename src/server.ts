@@ -3,10 +3,13 @@ import sequelize from './config/env.js';
 import dotenv from 'dotenv';
 import './models/associates.js'
 import applySecurity from './utils/security.js';
+import UserRouter from './routes/user.js';
 dotenv.config();
 const app = express();
 app.use(express.json());
 applySecurity(app);
+app.use('/user', UserRouter);
+
 const startServer = async () => {
     try {
         console.log("Starting server...");

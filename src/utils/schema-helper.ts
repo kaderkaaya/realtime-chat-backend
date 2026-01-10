@@ -3,8 +3,8 @@ class schemaHelper {
     static validateSchemaBody(schema: any) {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
-                const result = await schema.safeParseAsync(req.body);
-                Object.assign(req.body, result.data);
+                const result = await schema.validateAsync(req.body);
+                req.body = result;
                 next();
             } catch (error) {
                 res.status(400).send({ success: false, error: `${error}`, statusCode: 400 })

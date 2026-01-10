@@ -1,6 +1,6 @@
 import { Response } from "express";
 class ResponseHelper {
-    static success(res: Response, data: any, message: string, statusCode: number) {
+    static success({ res, data, message, statusCode }: { res: Response, data: any, message: string, statusCode: number }) {
         return res.status(statusCode).json({
             success: true,
             statusCode,
@@ -9,7 +9,7 @@ class ResponseHelper {
         })
     };
 
-    static sendError(res: Response, message: any, statusCode: number) {
+    static sendError({ res, message, statusCode }: { res: Response, message: any, statusCode: number }) {
         return res.status(statusCode).json({
             success: false,
             statusCode,
