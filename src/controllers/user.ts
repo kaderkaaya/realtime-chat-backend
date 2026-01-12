@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import UserService from "../services/user.js";
 import ResponseHelper from "../utils/response-helper.js";
 class UserController {
 
-    static async register(req: Request, res: Response): Promise<void> {
+    static async register(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { username, mail, password } = req.body;
             const user = await UserService.register({ username, mail, password });
             ResponseHelper.success({ res, data: { user }, message: "User registered successfully", statusCode: 201 });
-        } catch (error) {
-            ResponseHelper.sendError({ res, message: (error as Error).message, statusCode: (error as any).statusCode || 500 });
+        } catch (e) {
+            next(e);
         }
     }
 

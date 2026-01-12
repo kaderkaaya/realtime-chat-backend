@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 applySecurity(app);
-app.use('/user', UserRouter);
+app.use('/users', UserRouter);
 
 const startServer = async () => {
     try {
