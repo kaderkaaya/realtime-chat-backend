@@ -1,6 +1,8 @@
 import UserDataBase from "../database/user.js";
 import ErrorHelper from "../utils/error-helper.js";
 import HashHelper from "../utils/hash-helper.js";
+import JwtHelper from "../utils/jwt-helper.js";
+
 class UserService {
 
     static async register({ username, mail, password }: { username: string, mail: string, password: string }) {
@@ -22,8 +24,10 @@ class UserService {
         if (!isPasswordValid) {
             throw new Error('Invalid password');
         }
+        const payload = { userId: user.id };
+        const token = JwtHelper.generateToken(payload);
 
-        return user;
+        return { user, token };
     }
 }
 
