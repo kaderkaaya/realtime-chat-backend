@@ -1,11 +1,13 @@
+import jwt, { SignOptions, Secret } from "jsonwebtoken";
 
-import jwt from "jsonwebtoken";
+const JWT_SECRET = process.env.JWT_SECRET as Secret;
 
-const JWTKEY = process.env.JWT_KEY;
 class JwtHelper {
-    static generateToken(payload: object): string {
-        return jwt.sign(payload, JWTKEY!, { expiresIn: "7d" });
+    static generateToken(payload: object,   expiresIn: SignOptions["expiresIn"]): string {
+          const options: SignOptions = { expiresIn };
+        return jwt.sign(payload, JWT_SECRET!, options);
     }
+
 }
 
 export default JwtHelper;

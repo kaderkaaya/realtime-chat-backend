@@ -8,7 +8,10 @@ class HashHelper {
     }
 
     static async comparePassword({ password, hashedPassword }: { password: string, hashedPassword: string }): Promise<boolean> {
-        return await bcrypt.compare(password, hashedPassword);
+        const slm = await bcrypt.compare(password, hashedPassword);
+        console.log('slm',slm);
+        
+        return slm;
     }
 }
 

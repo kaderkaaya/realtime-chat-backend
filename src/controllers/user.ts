@@ -9,6 +9,8 @@ class UserController {
             const user = await UserService.register({ username, mail, password });
             ResponseHelper.success({ res, data: { user }, message: "User registered successfully", statusCode: 201 });
         } catch (e) {
+            console.log('e',e);
+            
             next(e);
         }
     }

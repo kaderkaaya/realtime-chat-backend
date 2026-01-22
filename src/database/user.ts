@@ -9,6 +9,13 @@ class UserDataBase {
         const newUser = await UserModel.create({ username, mail, password });
         return newUser;
     }
+
+    static async updateUserStatus({ id }: { id: number }) {
+        return await UserModel.update(
+            { status: 'online', lastSeenAt: new Date() },
+            { where: { id } }
+        );
+    }
 }
 
 export default UserDataBase;

@@ -2,6 +2,8 @@ import UserDataBase from "../database/user.js";
 import ErrorHelper from "../utils/error-helper.js";
 import HashHelper from "../utils/hash-helper.js";
 import JwtHelper from "../utils/jwt-helper.js";
+import TokenDatabase from "../database/token.js";
+import e from "express";
 
 class UserService {
 
@@ -20,14 +22,16 @@ class UserService {
         if (!user) {
             throw new Error('User not found');
         }
-        const isPasswordValid = await HashHelper.comparePassword({ password, hashedPassword: user.password });
+        const isPasswordValid = await HashHelper.comparePassword({ password, hashedPassword: user.dataValues.password });
         if (!isPasswordValid) {
             throw new Error('Invalid password');
         }
-        const payload = { userId: user.id };
-        const token = JwtHelper.generateToken(payload);
-
-        return { user, token };
+         const payload = { userId: user.id };
+        const refresh_token = JwtHelper.generateToken(payload, "7d");
+        const access_token = JwtHelper.generateToken(payload, "15m");
+        await TokenDatabase.storeToken({ userId: user.id, token: refresh_token });
+        await UserDataBase.updateUserStatus({ id: user.id});
+        return { ...user.dataValues, refresh_token, access_token };
     }
 }
 
